@@ -1,11 +1,15 @@
 
 # Contributing
 
-Contributions to OCSJS Extended are welcome.
+Contributions to OCSJS Extended should target this repository's `main` branch. This repository is maintained independently from the original OCSJS project.
 
-## Development
+## Development environment
 
-Requirements: Node.js 26 or later and pnpm 12.14.0.
+Required:
+
+- Node.js 26 or later
+- pnpm 12.14.0
+- Git
 
 Install dependencies from the repository root:
 
@@ -13,34 +17,54 @@ Install dependencies from the repository root:
 pnpm install --frozen-lockfile
 ```
 
-Before submitting a change, run the relevant checks:
+The project uses a pnpm workspace. Keep dependency changes consistent across package manifests and `pnpm-lock.yaml`.
+
+## Source layout
+
+- `packages/core/` — shared core functionality
+- `packages/scripts/` — userscript entry points and integrations
+- `packages/utils/` — utility modules
+- `scripts/` — build orchestration, TypeScript checks, and stylesheet generation
+- `tests/` — automated tests
+
+Prefer source changes over modifying generated files in `dist/`.
+
+## Validation
+
+Run the checks relevant to the change:
 
 ```powershell
 pnpm lint
 pnpm tsc
-pnpm build
 pnpm test
+pnpm build
 ```
 
-The optional answerer tests require a local `tests/answerer.config.json`. Use `tests/answerer.config.example.json` as a reference, and do not commit credentials or private test data.
+These commands validate JavaScript, run the configured TypeScript checks, execute the resolver test suite, and generate the userscript artifacts.
 
-## Workflow
+The answerer test suite requires a local `tests/answerer.config.json`. Use `tests/answerer.config.example.json` to understand its structure. Do not commit credentials, account data, or private test fixtures.
 
-1. Create a focused branch from the latest `main`.
-2. Make the change and update tests when appropriate.
-3. Run relevant checks and review the diff.
-4. Open a pull request against this repository's `main` branch.
+## Contribution workflow
 
-Use clear commit messages, such as `fix: correct navigation` or `docs: update setup instructions`.
+1. Start from the latest `main`.
+2. Create a focused branch.
+3. Make the change and update tests when appropriate.
+4. Run the relevant validation commands.
+5. Review the complete diff, including generated and dependency files.
+6. Open a pull request against this repository's `main` branch.
 
-## Guidelines
+Use descriptive commit messages, such as `fix: correct navigation`, `refactor: simplify build pipeline`, or `docs: update development instructions`.
 
-- Prefer source changes over edits to generated files in `dist/`.
-- Keep changes focused and explain meaningful behavior changes.
-- Do not commit `node_modules`, generated output, local environment files, secrets, or unrelated personal configuration.
-- Preserve applicable copyright notices and third-party license terms.
+## Engineering guidelines
+
+- Keep changes focused and avoid unrelated modifications.
+- Prefer fixing the underlying issue over adding temporary compatibility workarounds.
+- Update package manifests and the lockfile together when changing dependencies.
+- Keep the build configuration aligned with the currently supported Node.js and pnpm versions.
+- Do not commit `node_modules`, generated bundles, local environment files, secrets, or private test configuration.
+- Preserve upstream copyright notices and third-party license terms.
 - Remove session cookies, access tokens, passwords, and personal information from issue reports and logs.
 
 ## License
 
-The project declares GPL-3.0-or-later. Contributions must respect the project license and applicable third-party licensing obligations.
+The project declares GPL-3.0-or-later. Contributions must respect the applicable project and third-party licensing terms.
