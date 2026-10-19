@@ -26,7 +26,10 @@ jobs:
         shell: bash
         env:
           RELEASE_TAG: ${{ inputs.tag }}
+        
         run: |
+          set -euo pipefail
+
           if [[ ! "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z.-]+)?$ ]]; then
             echo "Expected a version tag such as v1.0.0" >&2
             exit 1
@@ -36,6 +39,18 @@ jobs:
             echo "Release tag does not exist: ${RELEASE_TAG}" >&2
             exit 1
           fi
+
+          PACKAGE_VERSION="$(jq -r '.version' package.json)"
+          EXPECTED_TAG="v${PACKAGE_VERSION}"
+
+          if [[ "$RELEASE_TAG" != "$EXPECTED_TAG" ]]; then
+            echo "Release tag '$RELEASE_TAG' does not match package.json version '$PACKAGE_VERSION'." >&2
+            echo "Expected tag: $EXPECTED_TAG" >&2
+            exit 1
+          fi
+
+          echo "Validated release tag: $RELEASE_TAG"
+
 
       - name: Set up pnpm
         uses: pnpm/action-setup@v4
