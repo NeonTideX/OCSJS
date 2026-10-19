@@ -1,7 +1,12 @@
+
 # Third-Party Notices
 
-This repository contains code that was originally distributed under the MIT License.
+## OCSJS
 
-The original MIT license text and copyright notice are preserved in `OCSJS-MIT.txt`.
+This project is derived from [OCSJS](https://github.com/ocsjs/ocsjs).
 
-Applicable third-party copyright notices and license terms must be retained.
+The original upstream MIT license and copyright notice are preserved in [OCSJS-MIT.txt](OCSJS-MIT.txt):
+
+Copyright (c) 2022 enncy
+
+Retain applicable third-party notices and license terms when redistributing this project. The root `LICENSE` describes this fork's declared project license; it does not replace the original upstream notice.
