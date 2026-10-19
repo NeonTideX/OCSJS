@@ -88,6 +88,11 @@ jobs:
           test -s release/ocs.common.user.js
           test -s release/core.js
           test -s release/index.js
+          test -s LICENSE
+          test -s THIRD_PARTY_LICENSES/OCSJS-MIT.txt
+          test -s THIRD_PARTY_LICENSES/THIRD_PARTY_NOTICES.md
+          grep -q "Copyright (c) 2022 enncy" release/index.js
+          grep -q "Copyright (c) 2022 enncy" release/ocs.user.js
 
       - name: Publish GitHub Release
         uses: ncipollo/release-action@v1
@@ -107,6 +112,9 @@ jobs:
             release/ocs.common.user.js
             release/core.js
             release/index.js
+            LICENSE
+            THIRD_PARTY_LICENSES/OCSJS-MIT.txt
+            THIRD_PARTY_LICENSES/THIRD_PARTY_NOTICES.md
           allowUpdates: true
           omitBodyDuringUpdate: true
           omitNameDuringUpdate: true

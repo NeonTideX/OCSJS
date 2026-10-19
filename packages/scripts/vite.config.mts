@@ -3,8 +3,20 @@ import { defineConfig } from 'vite';
 import banner from 'vite-plugin-banner';
 import packageJson from '../../package.json' with { type: 'json' };
 import dotenv from 'dotenv';
+import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 const { author, description, homepage, license, name } = packageJson;
+const thirdPartyLicenseText = readFileSync(
+  new URL('../../THIRD_PARTY_LICENSES/OCSJS-MIT.txt', import.meta.url),
+  'utf8'
+).trim();
+
+const thirdPartyLicenseBanner = [
+  '/*',
+  ' * Original OCSJS MIT license notice:',
+  ...thirdPartyLicenseText.split(/\r?\n/).map((line) => ` * ${line}`),
+  ' */'
+].join('\n');
 const bannerContent = `
 /*!
  * ${name} ( ${homepage} )
@@ -55,6 +67,6 @@ export default defineConfig({
 	plugins: [
 		// commonjs(),
 		visualizer(),
-		banner(bannerContent)
+		banner(`${bannerContent}\n${thirdPartyLicenseBanner}`)
 	]
 });

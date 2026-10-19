@@ -1,4 +1,4 @@
-/* eslint-disable no-undef, max-len */
+/* eslint-disable no-undef */
 /// <reference path="./global.d.ts" />
 
 // 环境检测
@@ -19,12 +19,12 @@ if (
 	].some((api) => typeof Reflect.get(globalThis, api) === 'undefined')
 ) {
 	const open = confirm(
-		`OCS网课脚本不支持当前的脚本管理器（${GM_info.scriptHandler}）。` +
-		'请前往 https://docs.ocsjs.com/docs/script 下载指定的脚本管理器，例如 “Scriptcat 脚本猫” 或者 “Tampermonkey 油猴”'
+		`OCSJS Extended 不支持当前的脚本管理器（${GM_info.scriptHandler}）。` +
+		'请使用 ScriptCat 脚本猫或 Tampermonkey 油猴。安装指南：https://github.com/NeonTideX/ocsjs#readme'
 	);
 
 	if (open) {
-		window.location.href = 'https://docs.ocsjs.com/docs/script';
+		window.location.href = 'https://github.com/NeonTideX/ocsjs#readme';
 	}
 	return;
 }
@@ -45,8 +45,8 @@ const infos = GM_info;
 			renderScript: RenderScript,
 			styles: [STYLE],
 			defaultPanelName: CommonProject.scripts.guide.namespace,
-			title: `${logoSvg} OCS <span style="font-size: 12px; color: #969696;">v${infos.script.version}</span>`
+			title: `${logoSvg} OCSJS Extended <span style="font-size: 12px; color: #969696;">v${infos.script.version}</span>`
 		},
-		updatePage: 'https://docs.ocsjs.com/docs/update'
+		updatePage: 'https://github.com/NeonTideX/ocsjs/releases/latest'
 	});
 })();
