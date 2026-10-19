@@ -2,12 +2,6 @@
 	"name": "ocsjs-extended",
 	"version": "1.0.0",
 	"description": "Independently maintained OCSJS userscript project with a modernized build toolchain.",
-	"types": "./lib/src/core/index.d.ts",
-	"main": "./lib/src/core/index.js",
-	"files": [
-		"lib",
-		"dist"
-	],
 	"scripts": {
 		"dev": "gulp -f ./scripts/dev-core.js",
 		"build": "gulp -f ./scripts/build-core.js",
@@ -21,17 +15,13 @@
 	},
 	"devDependencies": {
 		"@eslint/js": "^10.0.1",
-		"@html-eslint/eslint-plugin": "^0.67.0",
 		"@types/node": "^26.6.5",
 		"browser-env": "^3.3.0",
 		"del": "^9.0.1",
 		"eslint": "^10.13.0",
-		"eslint-plugin-import": "^2.32.0",
-		"eslint-plugin-node": "^11.1.0",
 		"globals": "^17.13.0",
 		"gulp": "^5.0.1",
 		"gulp-cli": "^3.1.0",
-		"gulp-zip": "^6.1.0",
 		"less": "^4.9.1",
 		"prettier": "^3.9.10",
 		"tsx": "^4.23.15",
