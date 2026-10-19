@@ -3,5 +3,4 @@ packages:
   - '!**/dist/**'
 allowBuilds:
   esbuild: true
-# 批准依赖的安装脚本（新版 pnpm 默认忽略并报错 ERR_PNPM_IGNORED_BUILDS）
 nodeLinker: hoisted

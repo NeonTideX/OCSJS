@@ -1,7 +1,7 @@
 {
 	"name": "@ocsjs/utils",
 	"version": "1.0.0",
-	"description": "utils package of ocs",
+	"description": "Shared utility modules for OCSJS Extended.",
 	"main": "./lib/index.js",
 	"types": "./lib/index.d.ts",
 	"scripts": {},
@@ -25,10 +25,5 @@
 		"url": "https://github.com/NeonTideX/ocsjs/issues"
 	},
 	"homepage": "https://github.com/NeonTideX/ocsjs#readme",
-	"devDependencies": {
-		"@types/node-fetch": "^2.6.13"
-	},
-	"dependencies": {
-		"node-fetch": "^3.3.2"
-	}
+	"private": true
 }

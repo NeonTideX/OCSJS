@@ -81,15 +81,7 @@ function loadConfig(path: string): Record<string, any> {
 
 const config = loadConfig(CONFIG_PATH);
 
-/**
- * 强制 request() 走 Node 分支（node-fetch）。
- *
- * browser-env 为了让 easy-us 的 `class IElement extends HTMLElement` 能加载，
- * 注册了 window/document，这会让 $.isInBrowser() 返回 true，于是 request()
- * 对 type:'GM_xmlhttpRequest' 的题库走 GM 分支并因无 GM API 而失败。
- * 本测试在 Node 下运行、没有真实 GM_xmlhttpRequest，故强制视作 Node 环境，
- * 让所有题库（含 GM 类型）统一降级为 node-fetch 发请求。
- */
+
 ($ as any).isInBrowser = () => false;
 
 // ========== 主逻辑 ==========
@@ -140,7 +132,7 @@ async function main() {
 		for (const w of gmWrappers) {
 			console.warn(`   - "${w.name}" (${w.url})`);
 		}
-		console.warn('   Node 环境下 GM_xmlhttpRequest 不可用，将自动降级为 node-fetch。');
+		console.warn('   Node 环境下 GM_xmlhttpRequest 不可用，将使用原生 fetch。');
 		console.warn('   跨域绕过行为与浏览器环境不同，部分请求可能失败。\n');
 	}
 

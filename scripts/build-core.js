@@ -78,20 +78,19 @@ async function createUserJs() {
 				gap: '\t'.repeat(4)
 			},
 			metadata: {
-				name: 'OCS 网课助手',
+				name: "OCSJS Extended",
 				version: version,
 				description: [
-					'OCS(online-course-script) 网课助手，官网 https://docs.ocsjs.com ，专注于帮助大学生从网课中释放出来',
-					'让自己的时间把握在自己的手中，拥有人性化的操作页面，流畅的步骤提示，支持 ',
+					'OCSJS Extended is an independently maintained userscript fork.',
+					'Supported integrations: ',
 					projectList,
-					'等网课的学习，作业。具体的功能请查看脚本悬浮窗中的教程页面。'
+					' Project information: https://github.com/NeonTideX/ocsjs'
 				].join(' '),
-				author: 'enncy',
-				license: 'GPL-3.0-or-later',
-				namespace: 'https://github.com/NeonTideX/ocsjs',
-				homepage: 'https://github.com/NeonTideX/ocsjs#readme',
-				source: 'https://github.com/NeonTideX/ocsjs',
-				icon: 'https://cdn.ocsjs.com/logo.png',
+				author: "NeonTideX (based on OCSJS by enncy)",
+				license: "GPL-3.0-or-later",
+				namespace: "https://github.com/NeonTideX/ocsjs",
+				homepage: "https://github.com/NeonTideX/ocsjs#readme",
+				source: "https://github.com/NeonTideX/ocsjs",
 				connect: ['enncy.cn', 'icodef.com', 'ocsjs.com', 'zaizhexue.top', 'localhost', '127.0.0.1',
 					// 智慧树阿里云资源，应用： 图片题资源访问
 					'aliyuncs.com'],

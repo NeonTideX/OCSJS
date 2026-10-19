@@ -1,11 +1,7 @@
 import { readFileSync, writeFileSync } from 'fs';
-import fetch from 'node-fetch';
 
 export type MetaDataType = string | string[];
 
-/**
- * 脚本头部信息格式
- */
 export interface MetaDataFormatter {
 	header: string;
 	footer: string;
@@ -14,9 +10,6 @@ export interface MetaDataFormatter {
 	gap: string;
 }
 
-/**
- * 脚本头部信息
- */
 export interface Metadata {
 	[x: string]: any;
 	name: string;
@@ -36,9 +29,6 @@ export interface Metadata {
 	'run-at': 'document-start' | 'document-end' | 'document-idle' | 'document-body' | 'document-body';
 }
 
-/**
- * 创建脚本参数
- */
 export interface CreateOptions {
 	parseRequire: boolean;
 	parseResource: boolean;

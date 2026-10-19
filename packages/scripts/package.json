@@ -1,7 +1,7 @@
 {
 	"name": "@ocsjs/scripts",
-	"version": "5.0.0",
-	"description": "core package of ocs",
+	"version": "1.0.0",
+	"description": "Browser userscript entry points and platform integrations for OCSJS Extended.",
 	"main": "./lib/index.js",
 	"types": "./lib/index.d.ts",
 	"files": [
@@ -49,5 +49,6 @@
 		"md5": "^2.3.0",
 		"semver": "^7.8.5",
 		"typr.js": "^1.0.0"
-	}
+	},
+	"private": true
 }

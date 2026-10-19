@@ -1,7 +1,7 @@
 {
 	"name": "ocsjs-extended",
-	"version": "5.2.1",
-	"description": "Community-maintained fork of OCSJS with a modernized userscript build toolchain.",
+	"version": "1.0.0",
+	"description": "Independently maintained OCSJS userscript project with a modernized build toolchain.",
 	"types": "./lib/src/core/index.d.ts",
 	"main": "./lib/src/core/index.js",
 	"files": [
@@ -9,12 +9,11 @@
 		"dist"
 	],
 	"scripts": {
-		"dev": "gulp -f ./scripts/dev-core.js & npm run changelog:simplify",
+		"dev": "gulp -f ./scripts/dev-core.js",
 		"build": "gulp -f ./scripts/build-core.js",
 		"tsc": "gulp -f ./scripts/tsc.js",
 		"lint": "eslint \"packages/**/*.{js,jsx,mjs,cjs}\" \"scripts/**/*.{js,jsx,mjs,cjs}\"",
 		"format": "prettier --config ./.prettierrc.json \"packages/**/*.{ts,tsx,js,jsx,vue,css}\" \"scripts/**/*.{ts,tsx,js,jsx,vue,css}\" --write",
-		"changelog:simplify": "gulp -f ./scripts/simplify_changelog.js",
 		"test": "tsx tests/resolver.test.ts",
 		"test:answerer": "tsx --import ./tests/setup-browser-env.ts tests/answerer.test.ts",
 		"build:style": "node scripts/build-style.js",
@@ -25,7 +24,6 @@
 		"@html-eslint/eslint-plugin": "^0.67.0",
 		"@types/node": "^26.6.5",
 		"browser-env": "^3.3.0",
-		"cz-conventional-changelog": "^3.3.0",
 		"del": "^9.0.1",
 		"eslint": "^10.13.0",
 		"eslint-plugin-import": "^2.32.0",
@@ -61,11 +59,6 @@
 	"license": "GPL-3.0-or-later",
 	"dependencies": {
 		"@microsoft/tsdoc": "^0.17.1"
-	},
-	"config": {
-		"commitizen": {
-			"path": "./node_modules/cz-conventional-changelog"
-		}
 	},
 	"packageManager": "pnpm@12.14.0",
 	"engines": {

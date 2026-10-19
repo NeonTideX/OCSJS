@@ -1,9 +1,10 @@
 import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig } from 'vite';
 import banner from 'vite-plugin-banner';
-import { author, description, homepage, license, name } from '../../package.json';
+import packageJson from '../../package.json' with { type: 'json' };
 import dotenv from 'dotenv';
 
+const { author, description, homepage, license, name } = packageJson;
 const bannerContent = `
 /*!
  * ${name} ( ${homepage} )

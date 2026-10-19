@@ -21,32 +21,31 @@ function isNodeEnv(): boolean {
 	);
 }
 
-/** Node 下用 node-fetch 拉取图片并转为 data URL（base64） */
+/** Node 环境下使用原生 fetch 拉取图片并转为 data URL */
 async function nodeFetchToBase64(url: string): Promise<string> {
-	// eslint-disable-next-line @typescript-eslint/no-var-requires
-	const fet: typeof fetch = require('node-fetch').default || require('node-fetch');
-	// 携带 Referer / User-Agent 绕过防盗链（如 chaoxing 403）
 	let referer = '';
 	try {
 		referer = new URL(url).origin + '/';
 	} catch {
 		// 非 URL，忽略
 	}
-	const res = await fet(url, {
+
+	const res = await globalThis.fetch(url, {
 		headers: {
 			Referer: referer,
 			'User-Agent':
 				'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
 		}
 	});
+
 	if (!res.ok) {
 		throw new Error(`图片下载失败 ${res.status}`);
 	}
-	// node-fetch v2 支持 .buffer()
-	const buffer = (res as any).buffer ? (res as any).buffer() : res.arrayBuffer();
-	const buf: Buffer = buffer instanceof Promise ? await buffer : buffer;
+
+	const buffer = Buffer.from(await res.arrayBuffer());
 	const contentType = res.headers.get('content-type') || 'image/png';
-	return `data:${contentType};base64,${buf.toString('base64')}`;
+
+	return `data:${contentType};base64,${buffer.toString('base64')}`;
 }
 
 /**

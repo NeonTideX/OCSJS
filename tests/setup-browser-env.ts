@@ -15,5 +15,5 @@ require('browser-env')();
 // @ts-ignore - 构建管线也需要 unsafeWindow
 globalThis.unsafeWindow = {};
 
-// @ts-ignore - GM_xmlhttpRequest 在 Node 下不可用，request() 会降级为 node-fetch
+// @ts-ignore
 globalThis.GM_xmlhttpRequest = undefined;

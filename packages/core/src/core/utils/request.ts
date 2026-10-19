@@ -73,7 +73,7 @@ export function request<T extends 'json' | 'text'>(
 					reject(new Error('GM_xmlhttpRequest is not defined'));
 				}
 			} else {
-				const fet: typeof fetch = env === 'node' ? require('node-fetch').default : fetch;
+				const fet: typeof fetch = fetch;
 
 				fet(url, { body: method === 'post' ? JSON.stringify(data) : undefined, method, headers })
 					.then((response) => {
