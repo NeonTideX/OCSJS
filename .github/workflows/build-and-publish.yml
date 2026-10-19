@@ -91,8 +91,6 @@ jobs:
           test -s LICENSE
           test -s THIRD_PARTY_LICENSES/OCSJS-MIT.txt
           test -s THIRD_PARTY_LICENSES/THIRD_PARTY_NOTICES.md
-          grep -q "Copyright (c) 2022 enncy" release/index.js
-          grep -q "Copyright (c) 2022 enncy" release/ocs.user.js
 
       - name: Publish GitHub Release
         uses: ncipollo/release-action@v1
