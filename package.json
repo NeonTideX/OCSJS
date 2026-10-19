@@ -1,0 +1,79 @@
+{
+	"name": "ocsjs",
+	"version": "5.2.1",
+	"description": "A TypeScript-based browser userscript project for automating supported online-course workflows.",
+	"types": "./lib/src/core/index.d.ts",
+	"main": "./lib/src/core/index.js",
+	"files": [
+		"lib",
+		"dist"
+	],
+	"scripts": {
+		"dev": "gulp -f ./scripts/dev-core.js & npm run changelog:simplify",
+		"build": "gulp -f ./scripts/build-core.js",
+		"tsc": "gulp -f ./scripts/tsc.js",
+		"lint": "eslint \"packages/**/*.{js,jsx,mjs,cjs}\" \"scripts/**/*.{js,jsx,mjs,cjs}\"",
+		"format": "prettier --config ./.prettierrc.json \"packages/**/*.{ts,tsx,js,jsx,vue,css}\" \"scripts/**/*.{ts,tsx,js,jsx,vue,css}\" --write",
+		"release": "sh ./scripts/release.sh",
+		"pub:minor": "npm version minor && pnpm build:core && npm publish",
+		"pub:major": "npm version major && pnpm build:core && npm publish",
+		"changelog:simplify": "gulp -f ./scripts/simplify_changelog.js",
+		"test": "tsx tests/resolver.test.ts",
+		"test:eus": "pnpm -C A:/VSCode/code/eus build && pnpm -C packages/core link A:/VSCode/code/eus && pnpm -C packages/scripts link A:/VSCode/code/eus && npm run build",
+		"test:eus:reset": "pnpm install -w && cd packages/scripts && pnpm install",
+		"test:answerer": "tsx --import ./tests/setup-browser-env.ts tests/answerer.test.ts",
+		"build:style": "node scripts/build-style.js",
+		"watch:style": "node scripts/build-style.js --watch"
+	},
+	"devDependencies": {
+		"@eslint/js": "^10.0.1",
+		"@html-eslint/eslint-plugin": "^0.67.0",
+		"@types/node": "^26.6.5",
+		"browser-env": "^3.3.0",
+		"cz-conventional-changelog": "^3.3.0",
+		"del": "^9.0.1",
+		"eslint": "^10.13.0",
+		"eslint-plugin-import": "^2.32.0",
+		"eslint-plugin-node": "^11.1.0",
+		"globals": "^17.13.0",
+		"gulp": "^5.0.1",
+		"gulp-cli": "^3.1.0",
+		"gulp-zip": "^6.1.0",
+		"less": "^4.9.1",
+		"prettier": "^3.9.10",
+		"tsx": "^4.23.15",
+		"typescript": "^7.0.2"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/NeonTideX/ocsjs.git"
+	},
+	"keywords": [
+		"ocs",
+		"script",
+		"playwright",
+		"puppeteer",
+		"electron",
+		"vue",
+		"ant-design-vue",
+		"typescript"
+	],
+	"author": "enncy",
+	"bugs": {
+		"url": "https://github.com/NeonTideX/ocsjs/issues"
+	},
+	"homepage": "https://github.com/NeonTideX/ocsjs#readme",
+	"license": "GPL-3.0-or-later",
+	"dependencies": {
+		"@microsoft/tsdoc": "^0.17.1"
+	},
+	"config": {
+		"commitizen": {
+			"path": "./node_modules/cz-conventional-changelog"
+		}
+	},
+	"packageManager": "pnpm@12.14.0",
+	"engines": {
+		"node": ">=26.0.0"
+	}
+}

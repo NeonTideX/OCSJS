@@ -1,0 +1,34 @@
+{
+	"name": "@ocsjs/utils",
+	"version": "1.0.0",
+	"description": "utils package of ocs",
+	"main": "./lib/index.js",
+	"types": "./lib/index.d.ts",
+	"scripts": {},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/NeonTideX/ocsjs.git"
+	},
+	"keywords": [
+		"ocs",
+		"script",
+		"playwright",
+		"puppeteer",
+		"electron",
+		"vue",
+		"ant-design-vue",
+		"typescript"
+	],
+	"author": "enncy",
+	"license": "GPL-3.0-or-later",
+	"bugs": {
+		"url": "https://github.com/NeonTideX/ocsjs/issues"
+	},
+	"homepage": "https://github.com/NeonTideX/ocsjs#readme",
+	"devDependencies": {
+		"@types/node-fetch": "^2.6.13"
+	},
+	"dependencies": {
+		"node-fetch": "^3.3.2"
+	}
+}
