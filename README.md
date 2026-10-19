@@ -15,8 +15,8 @@ This repository contains shared utilities, platform-specific integrations, build
 
 ## Requirements
 
-- Node.js compatible with the project dependencies
-- pnpm
+- Node.js 26.0.0 or later
+- pnpm 12.14.0 (pinned in the root package.json)
 - A compatible userscript manager, such as Tampermonkey or ScriptCat, if you intend to run a generated userscript in your browser
 
 ## Build from Source
@@ -24,20 +24,20 @@ This repository contains shared utilities, platform-specific integrations, build
 Open a terminal in the repository directory and run:
 
 ```powershell
-pnpm install --frozen-lockfile
-$env:VITE_BUILD_PATH = "../../dist"
-pnpm build
+pnpm install --frozen-lockfilepnpm build
 ```
 
-The `VITE_BUILD_PATH` setting is included for the current Windows build setup. If you use a different environment, check the project's build configuration before changing it.
 
 Generated files are placed in the configured build output directory. Use the generated bundle intended for your userscript manager; do not edit generated files as a substitute for changing the source code.
 
 ## Tests
 
-Run the test command configured by the project:
+Run the core checks from the repository root:
 
 ```powershell
+pnpm lint
+pnpm tsc
+pnpm build
 pnpm test
 ```
 
@@ -51,6 +51,6 @@ Before submitting changes, review the diff and run the relevant tests and build 
 
 ## License
 
-This project is intended to use **GPL-3.0-or-later**.
+This repository declares **GPL-3.0-or-later** for the project as a whole. Portions inherited from upstream OCSJS retain applicable copyright and licensing notices.
 
 See `LICENSE` for the project license. The original MIT license and third-party notices are preserved in `THIRD_PARTY_LICENSES/`.

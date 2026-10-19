@@ -87,10 +87,10 @@ async function createUserJs() {
 					'等网课的学习，作业。具体的功能请查看脚本悬浮窗中的教程页面。'
 				].join(' '),
 				author: 'enncy',
-				license: 'MIT',
-				namespace: 'https://enncy.cn',
-				homepage: 'https://docs.ocsjs.com',
-				source: 'https://github.com/ocsjs/ocsjs',
+				license: 'GPL-3.0-or-later',
+				namespace: 'https://github.com/NeonTideX/ocsjs',
+				homepage: 'https://github.com/NeonTideX/ocsjs#readme',
+				source: 'https://github.com/NeonTideX/ocsjs',
 				icon: 'https://cdn.ocsjs.com/logo.png',
 				connect: ['enncy.cn', 'icodef.com', 'ocsjs.com', 'zaizhexue.top', 'localhost', '127.0.0.1',
 					// 智慧树阿里云资源，应用： 图片题资源访问

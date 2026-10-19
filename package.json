@@ -1,7 +1,7 @@
 {
-	"name": "ocsjs",
+	"name": "ocsjs-extended",
 	"version": "5.2.1",
-	"description": "A TypeScript-based browser userscript project for automating supported online-course workflows.",
+	"description": "Community-maintained fork of OCSJS with a modernized userscript build toolchain.",
 	"types": "./lib/src/core/index.d.ts",
 	"main": "./lib/src/core/index.js",
 	"files": [
@@ -14,13 +14,8 @@
 		"tsc": "gulp -f ./scripts/tsc.js",
 		"lint": "eslint \"packages/**/*.{js,jsx,mjs,cjs}\" \"scripts/**/*.{js,jsx,mjs,cjs}\"",
 		"format": "prettier --config ./.prettierrc.json \"packages/**/*.{ts,tsx,js,jsx,vue,css}\" \"scripts/**/*.{ts,tsx,js,jsx,vue,css}\" --write",
-		"release": "sh ./scripts/release.sh",
-		"pub:minor": "npm version minor && pnpm build:core && npm publish",
-		"pub:major": "npm version major && pnpm build:core && npm publish",
 		"changelog:simplify": "gulp -f ./scripts/simplify_changelog.js",
 		"test": "tsx tests/resolver.test.ts",
-		"test:eus": "pnpm -C A:/VSCode/code/eus build && pnpm -C packages/core link A:/VSCode/code/eus && pnpm -C packages/scripts link A:/VSCode/code/eus && npm run build",
-		"test:eus:reset": "pnpm install -w && cd packages/scripts && pnpm install",
 		"test:answerer": "tsx --import ./tests/setup-browser-env.ts tests/answerer.test.ts",
 		"build:style": "node scripts/build-style.js",
 		"watch:style": "node scripts/build-style.js --watch"
@@ -58,7 +53,7 @@
 		"ant-design-vue",
 		"typescript"
 	],
-	"author": "enncy",
+	"author": "NeonTideX (based on OCSJS by enncy)",
 	"bugs": {
 		"url": "https://github.com/NeonTideX/ocsjs/issues"
 	},
@@ -75,5 +70,6 @@
 	"packageManager": "pnpm@12.14.0",
 	"engines": {
 		"node": ">=26.0.0"
-	}
+	},
+	"private": true
 }

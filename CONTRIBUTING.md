@@ -45,10 +45,11 @@ Install dependencies from the repository root:
 pnpm install --frozen-lockfile
 ```
 
-For the current Windows build setup:
+Run the core checks from the repository root:
 
 ```powershell
-$env:VITE_BUILD_PATH = "../../dist"
+pnpm lint
+pnpm tsc
 pnpm build
 pnpm test
 ```

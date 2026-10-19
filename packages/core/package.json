@@ -22,7 +22,7 @@
 		"ant-design-vue",
 		"typescript"
 	],
-	"author": "enncy",
+	"author": "NeonTideX (based on OCSJS by enncy)",
 	"license": "GPL-3.0-or-later",
 	"bugs": {
 		"url": "https://github.com/NeonTideX/ocsjs/issues"
