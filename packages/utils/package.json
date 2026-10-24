@@ -1,0 +1,29 @@
+{
+	"name": "@ocsjs/utils",
+	"version": "1.0.0",
+	"description": "Shared utility modules for OCSJS Extended.",
+	"main": "./lib/index.js",
+	"types": "./lib/index.d.ts",
+	"scripts": {},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/NeonTideX/ocsjs.git"
+	},
+	"keywords": [
+		"ocs",
+		"script",
+		"playwright",
+		"puppeteer",
+		"electron",
+		"vue",
+		"ant-design-vue",
+		"typescript"
+	],
+	"author": "NeonTideX (based on OCSJS by enncy)",
+	"license": "GPL-3.0-or-later",
+	"bugs": {
+		"url": "https://github.com/NeonTideX/ocsjs/issues"
+	},
+	"homepage": "https://github.com/NeonTideX/ocsjs#readme",
+	"private": true
+}

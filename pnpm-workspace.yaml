@@ -1,0 +1,6 @@
+packages:
+  - packages/**
+  - '!**/dist/**'
+allowBuilds:
+  esbuild: true
+nodeLinker: hoisted

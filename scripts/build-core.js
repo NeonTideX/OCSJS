@@ -1,0 +1,159 @@
+// @ts-check
+
+const { series } = require('gulp');
+const { deleteAsync } = require('del');
+const util = require('util');
+const { version } = require('../package.json');
+/** @type {(...args: any[])=> Promise<void>} */
+const execOut = util.promisify(require('./utils').execOut);
+const { createUserScript, createMetaFile } = require('../packages/utils');
+const path = require('path');
+const dotenv = require('dotenv');
+const fs = require('fs');
+const { build: buildStyle } = require('./build-style');
+
+dotenv.config();
+
+const distPath = process.env.BUILD_PATH || '../dist';
+console.log('BUILD_PATH: ', distPath);
+const distResolvedPath = path.resolve(__dirname, distPath);
+// Keep Vite output aligned with the directory used by the packaging tasks.
+process.env.VITE_BUILD_PATH = distResolvedPath;
+
+function cleanOutput() {
+	return deleteAsync([distPath, '../lib'], { force: true });
+}
+
+async function testResolver() {
+	await execOut('tsx ../tests/resolver.test.ts');
+}
+
+async function buildPackages() {
+	await execOut('tsc', { cwd: '../packages/core' });
+	await execOut('vite build', { cwd: '../packages/core' });
+	await execOut('tsc', { cwd: '../packages/scripts' });
+	await execOut('vite build', { cwd: '../packages/scripts' });
+}
+
+async function createUserJs() {
+	/** 模拟浏览器环境 */
+	require('browser-env')();
+
+	/** 先编译样式（easy-us 基础样式 + OCS 自定义样式），保证 style.css 为最新 */
+	await buildStyle();
+	const CSS_PATH = path.join(__dirname, '../packages/scripts/assets/css/style.css')
+
+	// @ts-ignore
+	globalThis.unsafeWindow = {};
+
+	/** @type {import('../packages/scripts/src/index')} */
+	// @ts-ignore
+	const ocs = require(path.join(distPath, 'index.js'));
+
+	/** @return {import('../packages/utils').CreateOptions} */
+	const createOptions = () => {
+		const { CXProject, ZHSProject, ZJYProject, IcveMoocProject, ICourseProject, YKTProject } = ocs;
+		const projectList = [CXProject, ZHSProject, ZJYProject, IcveMoocProject, ICourseProject, YKTProject]
+			.map((s) => `【${s.name}】`)
+			.join(' ');
+
+		const matchMetadata = Array.from(
+			new Set(
+				ocs
+					.definedProjects()
+					.map((p) => (p.domains || []).map((d) => `*://*.${d}/*`))
+					.flat()
+			)
+		);
+
+		return {
+			parseRequire: true,
+			parseResource: true,
+			resourceBuilder: (key, value) => `const ${key} = \`${value}\`;`,
+			metaDataFormatter: {
+				header: '==UserScript==',
+				footer: '==/UserScript==',
+				prefix: '// ',
+				symbol: '@',
+				gap: '\t'.repeat(4)
+			},
+			metadata: {
+				name: "OCSJS Extended",
+				version: version,
+				description: [
+					'OCSJS Extended is an independently maintained userscript fork.',
+					'Supported integrations: ',
+					projectList,
+					' Project information: https://github.com/NeonTideX/ocsjs'
+				].join(' '),
+				author: "NeonTideX (based on OCSJS by enncy)",
+				license: "GPL-3.0-or-later",
+				namespace: "https://github.com/NeonTideX/ocsjs",
+				homepage: "https://github.com/NeonTideX/ocsjs#readme",
+				source: "https://github.com/NeonTideX/ocsjs",
+				connect: ['enncy.cn', 'icodef.com', 'ocsjs.com', 'zaizhexue.top', 'localhost', '127.0.0.1',
+					// 智慧树阿里云资源，应用： 图片题资源访问
+					'aliyuncs.com'],
+				match: matchMetadata,
+				grant: [
+					'GM_info',
+					'GM_getTab',
+					'GM_saveTab',
+					'GM_setValue',
+					'GM_getValue',
+					'unsafeWindow',
+					'GM_listValues',
+					'GM_deleteValue',
+					'GM_notification',
+					'GM_xmlhttpRequest',
+					'GM_getResourceText',
+					'GM_addValueChangeListener',
+					'GM_removeValueChangeListener'
+				],
+				require: [path.join(__dirname, distPath, 'index.js')],
+				resource: [`STYLE ${CSS_PATH}`],
+				'run-at': 'document-start',
+				antifeature: 'payment'
+			},
+			entry: path.join(__dirname, '../packages/scripts/entry.js'),
+			dist: path.join(__dirname, distPath, 'ocs.user.js')
+		};
+	};
+
+	const officialOpts = createOptions();
+	console.log('CreateUserScript: ', officialOpts.metadata.name, officialOpts.dist);
+	await createUserScript(officialOpts);
+	console.log('createMetaFile: ', path.join(distResolvedPath, 'ocs.meta.js'));
+	await createMetaFile({ dist: officialOpts.dist, metaDist: path.join(distResolvedPath, 'ocs.meta.js') });
+
+	/** 创建调试脚本 */
+	const devOpts = createOptions();
+	devOpts.parseRequire = false;
+	devOpts.parseResource = false;
+	devOpts.metadata.name = devOpts.metadata.name + '(dev)';
+	devOpts.metadata.require = ['file:///' + path.join(distResolvedPath, 'index.js')];
+	devOpts.metadata.resource = [`STYLE file:///${CSS_PATH}`];
+	devOpts.entry = path.join(__dirname, '../packages/scripts/entry.dev.js');
+	devOpts.dist = path.join(distResolvedPath, 'ocs.dev.user.js');
+	/** 导出样式文件 */
+	fs.copyFileSync(
+		CSS_PATH,
+		path.join(distResolvedPath, 'style.css')
+	);
+	console.log('createUserScript: ', devOpts.metadata.name, devOpts.dist);
+	await createUserScript(devOpts);
+
+	/** 创建全Connect域名通用脚本 */
+	const commonOpts = createOptions();
+	commonOpts.metadata.name = commonOpts.metadata.name + ' - 全域名通用版';
+	const connect = Array.isArray(commonOpts.metadata.connect) ? commonOpts.metadata.connect : [];
+	connect.push('*');
+	commonOpts.metadata.connect = connect;
+	commonOpts.entry = path.join(__dirname, '../packages/scripts/entry.common.js');
+	commonOpts.dist = path.join(distResolvedPath, 'ocs.common.user.js');
+
+	console.log('createUserScript: ', commonOpts.metadata.name, commonOpts.dist);
+	await createUserScript(commonOpts);
+}
+
+exports.default = series(cleanOutput, testResolver, buildPackages, createUserJs);

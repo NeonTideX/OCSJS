@@ -1,0 +1,119 @@
+name: Build and Publish Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing version tag to publish, for example v1.0.0
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout release tag
+        uses: actions/checkout@v7.0.1
+        with:
+          ref: ${{ inputs.tag }}
+          fetch-depth: 0
+
+      - name: Validate release tag
+        shell: bash
+        env:
+          RELEASE_TAG: ${{ inputs.tag }}
+        
+        run: |
+          set -euo pipefail
+
+          if [[ ! "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z.-]+)?$ ]]; then
+            echo "Expected a version tag such as v1.0.0" >&2
+            exit 1
+          fi
+
+          if ! git rev-parse --verify "refs/tags/${RELEASE_TAG}" >/dev/null 2>&1; then
+            echo "Release tag does not exist: ${RELEASE_TAG}" >&2
+            exit 1
+          fi
+
+          PACKAGE_VERSION="$(jq -r '.version' package.json)"
+          EXPECTED_TAG="v${PACKAGE_VERSION}"
+
+          if [[ "$RELEASE_TAG" != "$EXPECTED_TAG" ]]; then
+            echo "Release tag '$RELEASE_TAG' does not match package.json version '$PACKAGE_VERSION'." >&2
+            echo "Expected tag: $EXPECTED_TAG" >&2
+            exit 1
+          fi
+
+          echo "Validated release tag: $RELEASE_TAG"
+
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v6.1.0
+        with:
+          version: 12.14.0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 26
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Type check
+        run: pnpm tsc
+
+      - name: Test
+        run: pnpm test
+
+      - name: Build release artifacts
+        shell: bash
+        run: BUILD_PATH=../release pnpm build
+
+      - name: Verify release artifacts
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s release/ocs.user.js
+          test -s release/ocs.meta.js
+          test -s release/ocs.common.user.js
+          test -s release/core.js
+          test -s release/index.js
+          test -s LICENSE
+          test -s THIRD_PARTY_LICENSES/OCSJS-MIT.txt
+          test -s THIRD_PARTY_LICENSES/THIRD_PARTY_NOTICES.md
+
+      - name: Publish GitHub Release
+        uses: ncipollo/release-action@v1.21.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ inputs.tag }}
+          name: OCSJS Extended ${{ inputs.tag }}
+          body: |
+            Build artifacts for OCSJS Extended ${{ inputs.tag }}.
+
+            Source: https://github.com/${{ github.repository }}/tree/${{ inputs.tag }}
+
+            See the repository README for installation and usage.
+          artifacts: |
+            release/ocs.user.js
+            release/ocs.meta.js
+            release/ocs.common.user.js
+            release/core.js
+            release/index.js
+            LICENSE
+            THIRD_PARTY_LICENSES/OCSJS-MIT.txt
+            THIRD_PARTY_LICENSES/THIRD_PARTY_NOTICES.md
+          allowUpdates: true
+          omitBodyDuringUpdate: true
+          omitNameDuringUpdate: true
+          makeLatest: true

@@ -1,0 +1,51 @@
+{
+	"name": "@ocsjs/core",
+	"version": "1.0.0",
+	"description": "Shared core functionality for OCSJS Extended.",
+	"main": "./lib/index.js",
+	"types": "./lib/index.d.ts",
+	"files": [
+		"lib",
+		"dist"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/NeonTideX/ocsjs.git"
+	},
+	"keywords": [
+		"ocs",
+		"script",
+		"playwright",
+		"puppeteer",
+		"electron",
+		"vue",
+		"ant-design-vue",
+		"typescript"
+	],
+	"author": "NeonTideX (based on OCSJS by enncy)",
+	"license": "GPL-3.0-or-later",
+	"bugs": {
+		"url": "https://github.com/NeonTideX/ocsjs/issues"
+	},
+	"homepage": "https://github.com/NeonTideX/ocsjs#readme",
+	"devDependencies": {
+		"@types/event-emitter": "^0.3.5",
+		"@types/lodash": "^4.17.26",
+		"@types/string-similarity": "^4.0.2",
+		"@types/tampermonkey": "^5.5.0",
+		"dotenv": "^18.0.8",
+		"rollup-plugin-visualizer": "^7.1.1",
+		"typedoc": "^0.28.20",
+		"vite": "^8.3.4",
+		"vite-plugin-banner": "^0.8.1"
+	},
+	"dependencies": {
+		"easy-us": "^1.0.15",
+		"events": "^3.3.0",
+		"lodash": "^4.18.1",
+		"playwright-core": "^1.64.1",
+		"semver": "^7.8.5",
+		"string-similarity": "^4.0.4"
+	},
+	"private": true
+}
