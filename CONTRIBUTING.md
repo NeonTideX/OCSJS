@@ -1,4 +1,3 @@
-
 # Contributing
 
 Contributions to OCSJS Extended should target this repository's `main` branch. This repository is maintained independently from the original OCSJS project.
@@ -68,3 +67,5 @@ Use descriptive commit messages, such as `fix: correct navigation`, `refactor: s
 ## License
 
 The project declares GPL-3.0-or-later. Contributions must respect the applicable project and third-party licensing terms.
+
+See [SECURITY.md](SECURITY.md) for private vulnerability reports, [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for community expectations, and [RELEASING.md](RELEASING.md) for distribution requirements. Keep new project documentation and GitHub contributions in English.

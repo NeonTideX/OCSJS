@@ -1,5 +1,8 @@
-
 # OCSJS Extended
+
+[![CI](https://github.com/NeonTideX/OCSJS/actions/workflows/ci.yml/badge.svg)](https://github.com/NeonTideX/OCSJS/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/NeonTideX/OCSJS)](https://github.com/NeonTideX/OCSJS/releases/latest)
+[![License: GPL-3.0-or-later](https://img.shields.io/badge/license-GPL--3.0--or--later-blue)](LICENSE)
 
 An independently maintained fork of [OCSJS](https://github.com/ocsjs/ocsjs), focused on maintaining the userscript codebase and modernizing its build toolchain.
 
@@ -97,7 +100,7 @@ The optional `pnpm test:answerer` suite requires a local `tests/answerer.config.
 
 ## Userscript installation
 
-Build the project and select the appropriate file from `dist/`.
+Download the standard [ocs.user.js](https://github.com/NeonTideX/OCSJS/releases/latest/download/ocs.user.js) from the [latest release](https://github.com/NeonTideX/OCSJS/releases/latest), then open or import it with your userscript manager. Release assets include SHA256SUMS and license notices. Alternatively, build the project and select the appropriate file from `dist/`.
 
 For normal use, start with `ocs.user.js`. Use `ocs.common.user.js` only when its broader network permissions are needed. The development variant is intended for development workflows, not as the default production installation.
 
@@ -116,6 +119,12 @@ Review the permissions and behavior of a generated userscript before enabling it
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow and contribution requirements.
 
 Report bugs and propose changes through the [issue tracker](https://github.com/NeonTideX/ocsjs/issues).
+
+## Project resources
+
+- [Changelog](CHANGELOG.md) and [Releases](https://github.com/NeonTideX/OCSJS/releases)
+- [Contributing](CONTRIBUTING.md), [community conduct](CODE_OF_CONDUCT.md), and [support](SUPPORT.md)
+- [Security policy](SECURITY.md) and [release checklist](RELEASING.md)
 
 ## License and attribution
 
