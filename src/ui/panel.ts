@@ -152,14 +152,16 @@ export class Panel {
     this.editor = element(this.doc, 'textarea'); this.editor.rows = 18; this.editor.spellcheck = false; this.editor.setAttribute('aria-label', 'Settings JSON');
     this.editor.value = JSON.stringify(this.actions.config.value, null, 2);
     this.body.append(this.editor);
-    const file = element(this.doc, 'input'); file.type = 'file'; file.accept = '.json,application/json'; file.setAttribute('aria-label', 'Import settings file');
+    const file = element(this.doc, 'input'); file.type = 'file'; file.accept = '.json,application/json'; file.hidden = true;
+    const filename = element(this.doc, 'span', 'No file selected');
     file.addEventListener('change', () => {
       const selected = file.files?.[0]; if (!selected) return;
+      filename.textContent = selected.name;
       if (selected.size > 5_000_000) { this.log('Settings files must be under 5 MB'); return; }
       void selected.text().then(text => { if (this.editor) this.editor.value = text; }).catch(() => this.log('Could not read settings file'));
     });
     this.body.append(this.row(this.button('Save settings', async () => { await this.actions.save(JSON.parse(this.editor!.value)); this.log('Settings saved.'); }, 'primary'), this.button('Export settings', () => download(this.doc, 'ocsjs-settings.json', this.actions.config.export(false))), this.button('Export with credentials', () => download(this.doc, 'ocsjs-settings-private.json', this.actions.config.export(true)))));
-    this.body.append(this.labeled('Import settings (review, then Save)', file));
+    this.body.append(this.labeled('Import settings (review, then Save)', this.row(this.button('Choose JSON file', () => file.click()), filename)), file);
     this.body.append(this.row(this.button('Connect provider', this.actions.connect), this.button('Clear answer cache', async () => { await this.actions.clearCache(); this.log('Answer cache cleared.'); })));
     this.body.append(this.paragraph('Export settings excludes headers, request data, connection URLs and URL queries. Export with credentials creates a private backup. Saving cancels active sessions.'));
   }
