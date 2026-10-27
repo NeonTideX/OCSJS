@@ -39,6 +39,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ocsjs-v1-verification
+          include-hidden-files: true
           path: |
             dist/
             .artifacts/
