@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "target": "ES2022", "module": "ESNext", "moduleResolution": "Bundler",
+    "lib": ["ES2023", "DOM", "DOM.Iterable"], "types": ["node"],
+    "strict": true, "noUncheckedIndexedAccess": true, "noUnusedLocals": true,
+    "noUnusedParameters": true, "skipLibCheck": true, "resolveJsonModule": true,
+    "esModuleInterop": true, "noEmit": true
+  },
+  "include": ["src/**/*.ts", "tests/answers.test.ts", "tests/core.test.ts"]
+}

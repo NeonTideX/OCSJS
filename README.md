@@ -1,133 +1,73 @@
-# OCSJS Extended
+# OCSJS V1
 
-[![CI](https://github.com/NeonTideX/OCSJS/actions/workflows/ci.yml/badge.svg)](https://github.com/NeonTideX/OCSJS/actions/workflows/ci.yml)
-[![Release](https://img.shields.io/github/v/release/NeonTideX/OCSJS)](https://github.com/NeonTideX/OCSJS/releases/latest)
-[![License: GPL-3.0-or-later](https://img.shields.io/badge/license-GPL--3.0--or--later-blue)](LICENSE)
+An independent browser study and exercise assistant. Six platform adapters share a native runtime with no production dependencies, upstream desktop service, external UI framework or CDN resources.
 
-An independently maintained fork of [OCSJS](https://github.com/ocsjs/ocsjs), focused on maintaining the userscript codebase and modernizing its build toolchain.
+[Install standard userscript](https://github.com/NeonTideX/OCSJS/releases/latest/download/ocs.user.js) | [Install Custom Providers variant](https://github.com/NeonTideX/OCSJS/releases/latest/download/ocs.common.user.js) | [Release assets](https://github.com/NeonTideX/OCSJS/releases/latest)
 
-## Overview
+## What it does
 
-OCSJS Extended is organized as a pnpm workspace. The repository contains shared core logic, userscript integration code, utility modules, and build tooling.
+- Plays video/audio with speed, volume, pause/resume and timed stop controls.
+- Navigates visible course items and optionally pages through documents.
+- Extracts questions, options, blank fields and image URLs across accessible frames.
+- Searches local notes, configurable JSON APIs and OpenAI-compatible endpoints.
+- Resolves single/multiple choices, judgement questions and ordered blanks.
+- Presents results for review and applies answers through native input events.
+- Supports optional save/next controls, settings import/export and a bounded answer cache.
+- Provides an English, isolated panel with study, exercises, search, settings and event logs.
 
-The project builds browser userscripts from source rather than maintaining generated bundles as the primary development files.
-
-## Architecture
-
-### Workspace packages
-
-| Path | Responsibility |
+| Platform | Main domains |
 | --- | --- |
-| `packages/core/` | Core functionality shared by userscript integrations |
-| `packages/scripts/` | Userscript entry points and platform-specific integrations |
-| `packages/utils/` | Shared utility modules |
-| `scripts/` | Build orchestration, TypeScript checks, and stylesheet generation |
-| `tests/` | Resolver and other automated tests |
+| Chaoxing / Xuexitong | `chaoxing.com`, `xueyinonline.com`, `xuexi365.com` and configured institution domains |
+| Zhihuishu | `zhihuishu.com`, `hike-teaching-center.polymas.com` |
+| ICVE | `course.icve.com.cn`, `mooc.icve.com.cn`, `ai.icve.com.cn`, `courshare.cn`, `webtrn.cn` |
+| ZJY / Vocational Cloud | Remaining `icve.com.cn` hosts |
+| iCourse / China University MOOC | `icourse163.org` |
+| Yuketang / Rain Classroom | `yuketang.cn`, `gdufemooc.cn`, `xuetangx.com` |
 
-### Build pipeline
+## Installation and first use
 
-The root `build` script invokes the Gulp pipeline defined in `scripts/build-core.js`.
+1. Install Tampermonkey or ScriptCat in a modern browser.
+2. Install one userscript variant from the links above. Standard permits same-origin/loopback providers; Custom Providers adds wildcard API-host permission.
+3. Open a supported course page. The OCSJS V1 panel appears at the upper right.
+4. In **Settings**, configure a local bank or a provider. See [provider examples](docs/PROVIDERS.md).
+5. Use **Start study**, **Start exercises**, or **Search answers**. Review exercise results and choose **Apply answer**.
 
-The pipeline:
+Automation does not start until you select Start. Automatic application, course navigation, document paging and save actions are off by default. Site verification and trusted-input restrictions may require a page interaction. Check answers and platform persistence before saving or submitting.
 
-1. Cleans previous generated output.
-2. Runs the resolver test stage.
-3. Builds the core and scripts packages with Vite.
-4. Generates the stylesheet used by the userscripts.
-5. Assembles the final userscript variants and metadata.
-
-The Vite configurations are maintained as `vite.config.mts` to use ESM configuration loading. The build script sets the output path for the Vite builds, so callers do not need to set `VITE_BUILD_PATH` manually.
-
-### Generated artifacts
-
-A successful build writes the generated files to `dist/`.
-
-| Artifact | Description |
-| --- | --- |
-| `core.js` | Bundled core package |
-| `index.js` | Bundled scripts package |
-| `style.css` | Generated userscript stylesheet |
-| `ocs.user.js` | Standard userscript build |
-| `ocs.common.user.js` | Common variant with broader `@connect` permissions |
-| `ocs.dev.user.js` | Development userscript variant |
-| `ocs.meta.js` | Userscript metadata |
-
-These files are build outputs. Make changes in the source packages and rebuild rather than editing generated bundles directly.
-
-## Toolchain
-
-The repository uses the following development toolchain:
-
-- Node.js 26 or later
-- pnpm 12.14.0, pinned through the root `packageManager` field
-- TypeScript 7
-- Vite 8
-- ESLint 10 with flat configuration
-- Prettier 3
-
-The exact dependency graph is recorded in `pnpm-lock.yaml`.
+The rewrite keeps version **1.0.0 / V1**. If upgrading from OCSJS Extended, export its settings first, disable that installation, and install V1 manually. The new name creates separate manager storage in some managers. Import converted providers and settings into V1; the previous installation and its credentials stay available for reference. Equal version numbers may not trigger an automatic update.
 
 ## Development
 
-Install the workspace dependencies from the repository root:
+Requires Node.js 24 or newer and pnpm 12.14.0.
 
-```powershell
+```sh
 pnpm install --frozen-lockfile
+pnpm check
+pnpm test:browser
 ```
 
-### Validation commands
+`pnpm check` runs the English/source audit, strict TypeScript checking, unit/regression tests and the production build. Browser tests use an isolated installed Edge on Windows, `PLAYWRIGHT_BROWSER_PATH` when provided, or Playwright Chromium on other systems. On Linux, install Chromium for the pinned playwright-core version with `pnpm exec playwright-core install --with-deps chromium`.
 
-```powershell
-pnpm lint
-pnpm tsc
-pnpm test
-```
+`pnpm dev` watches TypeScript sources. Restart it after changing CSS or platform metadata. Generated outputs live in `dist/`; edit `src/` instead.
 
-Build the production userscripts with:
+| Output | Purpose |
+| --- | --- |
+| `ocs.user.js` / `ocs.meta.js` | Standard installable userscript and metadata |
+| `ocs.common.user.js` / `ocs.common.meta.js` | Custom-provider variant and its metadata |
+| `SHA256SUMS` | SHA-256 manifest for scripts, metadata and license files |
 
-```powershell
-pnpm build
-```
+## Documentation
 
-The commands serve different purposes:
+- [Architecture and lifecycle](docs/ARCHITECTURE.md)
+- [Feature inventory and migration boundaries](docs/FEATURES.md)
+- [Providers and connection protocol](docs/PROVIDERS.md)
+- [Settings reference](docs/SETTINGS.md)
+- [Contributing](CONTRIBUTING.md) and [release procedure](RELEASING.md)
 
-- `pnpm lint` runs ESLint checks against JavaScript source files.
-- `pnpm tsc` runs the configured TypeScript compilation checks.
-- `pnpm test` runs the resolver test suite.
-- `pnpm build` generates the package bundles, stylesheet, userscript variants, and metadata.
+The original 164 resolver fixtures are retained. Integration tests run the built userscript against representative native markup for all six adapters, plus cancellation, route changes, frames, selection and panel behavior. They do not establish access to authenticated courses, live-site compatibility for every variant, or server-side course completion.
 
-The optional `pnpm test:answerer` suite requires a local `tests/answerer.config.json`. Use `tests/answerer.config.example.json` as a reference. Keep credentials and private test data out of version control.
+Some historical behavior is intentionally omitted: upstream desktop-only actions, executable provider handlers, automatic font-bitmap recognition, random discussion posting and progress overrides. See the feature inventory before upgrading.
 
-## Userscript installation
+## License
 
-Download the standard [ocs.user.js](https://github.com/NeonTideX/OCSJS/releases/latest/download/ocs.user.js) from the [latest release](https://github.com/NeonTideX/OCSJS/releases/latest), then open or import it with your userscript manager. Release assets include SHA256SUMS and license notices. Alternatively, build the project and select the appropriate file from `dist/`.
-
-For normal use, start with `ocs.user.js`. Use `ocs.common.user.js` only when its broader network permissions are needed. The development variant is intended for development workflows, not as the default production installation.
-
-Review the permissions and behavior of a generated userscript before enabling it in a browser userscript manager.
-
-## Repository conventions
-
-- Edit source files under `packages/` and build tooling under `scripts/`.
-- Treat `dist/` as generated output.
-- Keep dependency changes synchronized with `pnpm-lock.yaml`.
-- Keep workspace and TypeScript configuration consistent with the current toolchain.
-- Do not commit local environment files, credentials, or private test configuration.
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow and contribution requirements.
-
-Report bugs and propose changes through the [issue tracker](https://github.com/NeonTideX/ocsjs/issues).
-
-## Project resources
-
-- [Changelog](CHANGELOG.md) and [Releases](https://github.com/NeonTideX/OCSJS/releases)
-- [Contributing](CONTRIBUTING.md), [community conduct](CODE_OF_CONDUCT.md), and [support](SUPPORT.md)
-- [Security policy](SECURITY.md) and [release checklist](RELEASING.md)
-
-## License and attribution
-
-The root `LICENSE` declares GPL-3.0-or-later for this project. The original OCSJS MIT license and copyright notice are preserved in `THIRD_PARTY_LICENSES/OCSJS-MIT.txt`.
-
-This is an independently maintained fork. Original copyright notices and applicable third-party license terms must be preserved.
+GPL-3.0-or-later; see [LICENSE](LICENSE). Historical OCSJS MIT copyright and permission notices remain in [THIRD_PARTY_LICENSES](THIRD_PARTY_LICENSES/THIRD_PARTY_NOTICES.md). Runtime development, updates, documentation and support are maintained in this repository. GitHub may retain fork-network metadata separately from runtime independence.

@@ -1,12 +1,9 @@
-
 # Third-Party Notices
 
-## OCSJS
+## Historical OCSJS source and fixtures
 
-This project is derived from [OCSJS](https://github.com/ocsjs/ocsjs).
+Earlier revisions of this repository were derived from OCSJS by enncy, Copyright (c) 2022. The historical MIT notice is preserved in [OCSJS-MIT.txt](OCSJS-MIT.txt). Original resolver test fixtures remain part of this project.
 
-The original upstream MIT license and copyright notice are preserved in [OCSJS-MIT.txt](OCSJS-MIT.txt):
+The V1 browser runtime is maintained in this repository and does not load the historical project's framework, desktop service, CDN resources or update service. Retained attribution describes source history and licensing; it is not a runtime dependency or affiliation claim.
 
-Copyright (c) 2022 enncy
-
-Retain applicable third-party notices and license terms when redistributing this project. The root `LICENSE` describes this fork's declared project license; it does not replace the original upstream notice.
+The root LICENSE declares GPL-3.0-or-later for this project. Development dependencies have their own licenses distributed with those packages and are not loaded by the installed userscript.

@@ -1,28 +1,29 @@
 name: Bug report
-description: Report a reproducible problem in OCSJS Extended.
+description: Report an OCSJS V1 behavior or compatibility issue
+title: '[Bug]: '
+labels: [bug]
 body:
   - type: input
-    id: environment
+    id: platform
     attributes:
-      label: Environment
-      description: Include release version, standard/common variant, OS, browser, and userscript manager versions.
+      label: Platform and page type
+      description: Include the hostname and course, homework or exam variant.
     validations:
       required: true
-  - type: textarea
-    id: reproduction
+  - type: input
+    id: browser
     attributes:
-      label: Affected integration and reproduction
-      description: Describe the platform and minimal steps. Do not share credentials or private course material.
+      label: Browser and userscript manager versions
     validations:
       required: true
   - type: textarea
     id: behavior
     attributes:
-      label: Expected and actual behavior
+      label: Reproduction, expected behavior and actual behavior
+      description: Include a minimal example. Remove tokens, private course text and account information.
     validations:
       required: true
   - type: textarea
-    id: diagnostics
+    id: evidence
     attributes:
-      label: Redacted diagnostics
-      description: Remove session cookies, answer-provider tokens, account data, and private URLs.
+      label: Sanitized logs or screenshots

@@ -1,8 +1,5 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Report a security vulnerability
-    url: https://github.com/NeonTideX/OCSJS/security/advisories/new
-    about: Use private reports for sensitive vulnerabilities.
-  - name: Project support
-    url: https://github.com/NeonTideX/OCSJS/blob/main/SUPPORT.md
-    about: Support and contribution guidance for this independently maintained fork.
+  - name: OCSJS V1 documentation
+    url: https://github.com/NeonTideX/OCSJS#readme
+    about: Installation, settings, provider examples and migration boundaries

@@ -1,16 +1,17 @@
 name: Feature request
-description: Propose a focused improvement to OCSJS Extended.
+description: Suggest an improvement to the independent browser assistant
+title: '[Feature]: '
+labels: [enhancement]
 body:
   - type: textarea
     id: problem
     attributes:
-      label: Problem or use case
+      label: Problem and affected workflow
     validations:
       required: true
   - type: textarea
     id: proposal
     attributes:
-      label: Proposed behavior and alternatives
-      description: Include affected integrations and any permission or compatibility implications.
+      label: Proposed behavior and an example
     validations:
       required: true

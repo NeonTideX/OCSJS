@@ -1,11 +1,9 @@
-# Security policy
+# Security
 
-Security fixes target main and the current OCSJS Extended 1.x release line. Upstream OCSJS versions are maintained by their respective maintainers.
+Report sensitive vulnerabilities through this repository's private security advisory channel when available. Avoid posting credentials or private course content in public issues.
 
-Use [GitHub private vulnerability reporting](https://github.com/NeonTideX/OCSJS/security/advisories/new). Do not disclose exploitable details, session cookies, answer-provider tokens, account data, or private course content in public issues.
+OCSJS V1 accepts declarative providers only. It does not evaluate imported handlers. Provider endpoints use HTTPS or loopback HTTP, requests omit cookies, and authentication is supplied explicitly through provider settings. The Custom Providers variant intentionally grants broad request permission; install only the variant you need.
 
-Include the affected version or commit, browser and userscript manager versions, selected variant, a minimal reproduction, and the expected impact. Remove credentials from logs and examples. There is no guaranteed response time.
+Settings and cached answers stay in userscript-manager storage. Ordinary settings exports remove common credential-bearing fields. Full private exports intentionally include credentials. Logs contain application events rather than general network traffic.
 
-Userscript grants, allowed network destinations, and third-party integrations are part of the trust model. The common variant grants broader network access than the standard variant. Review permissions before installation. This fork does not provide a security boundary against the websites or services it interacts with.
-
-Ordinary compatibility issues belong in the bug-report form. This policy covers this fork; report unrelated upstream vulnerabilities to the relevant project.
+Third-party answer quality, endpoint retention policies, account access and server-side grading are outside the runtime's guarantees. Review provider configuration and generated answers before use.

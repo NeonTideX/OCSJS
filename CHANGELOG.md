@@ -1,17 +1,17 @@
 # Changelog
 
-This changelog tracks OCSJS Extended releases. Historical changes from the upstream OCSJS project remain documented in the [upstream repository](https://github.com/ocsjs/ocsjs).
+## V1 / 1.0.0 - Independent runtime rewrite - 2026-10-27
 
-## [Unreleased]
+- Replaced the framework/workspace runtime with native TypeScript modules and a single bundled userscript.
+- Consolidated six platform integrations into a domain and selector registry.
+- Added cancelable study/exercise sessions, stale-question guards, bounded workers and provider rate gates.
+- Added declarative JSON providers, local notes, OpenAI-compatible requests and credential-aware settings export.
+- Rebuilt the English panel, review workflow, native field updates and diagnostic events.
+- Retained all 164 historical resolver fixtures and added core/browser regressions.
+- Replaced Gulp/Vite tooling with esbuild, a strict source audit, reproducible release assets and checksums.
+- Removed upstream runtime services, desktop bridge assumptions, external font resources and obsolete generated package trees.
+- Documented manual migration and intentional feature boundaries. The package version stays 1.0.0; the independent release uses the `v1` tag without rewriting the historical `v1.0.0` tag.
 
-Changes after the latest published version will be recorded here.
+## 1.0.0 - Historical baseline
 
-## [1.0.0] - 2026-10-25
-
-- Added security reporting, contribution templates, community guidance, release checksums, and an immutable release workflow.
-- Established an independently maintained OCSJS Extended baseline.
-- Modernized the development toolchain for Node.js 26, pnpm 12, TypeScript 7, Vite 8, and ESLint 10.
-- Updated the build pipeline, userscript metadata, project documentation, and third-party license notices.
-
-[Unreleased]: https://github.com/NeonTideX/OCSJS/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/NeonTideX/OCSJS/releases/tag/v1.0.0
+The earlier OCSJS Extended implementation and its build pipeline are preserved in Git history and the historical v1.0.0 release.
